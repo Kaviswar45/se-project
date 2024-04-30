@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile</title>
+<link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+<div class="profile-container">
+    <div class="field">
+        <label for="username">Username:</label>
+        <input type="text" id="username" class="input-field" readonly>
+    </div>
+    <div class="field">
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" class="input-field" >
+    </div>
+    <div class="field">
+        <label for="birth_date">Birth Date:</label>
+        <input type="date" id="birth_date" class="input-field" >
+    </div>
+    <div class="field">
+        <label for="bio">Bio:</label>
+        <textarea id="bio" class="input-field" ></textarea>
+    </div>
+    <div class="button-container">
+        <button type="button" onclick="createProfile()">Save</button>
+    </div>
+</div>
+
+
+<script>
+// Retrieve username from local storage
+const username = localStorage.getItem('username');
+
+
+if (!username) {
+    window.location.href = "./login.html";
+}
+
+// Display username in the input field
+document.getElementById('username').value = username;
+
+
+
+
+async function createProfile() {
+    const full_name = document.getElementById("full_name").value;
+    const birth_date = document.getElementById("birth_date").value;
+    const bio = document.getElementById("bio").value;
+
+    const requestData = {
+        username: window.username, // Retrieve username from global variable
+        full_name: full_name,
+        birth_date: birth_date,
+        bio: bio
+    };
+
+    try {
+        const response = await fetch("http://localhost:3000/api/profile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        if (response.ok) {
+
+                        // Redirect to index.html
+            window.location.href = "/Users/kaviswarr/Desktop/news aggregation software/html/home/index.html";
+        } else {
+            throw new Error("Failed to create user profile");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Failed to create user profile");
+    }
+}
+
+
+
+
+// Set username as a global variable
+window.username = username;
+</script>
+
+
+</body>
+</html>

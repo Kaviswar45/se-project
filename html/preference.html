@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Aggregation Preferences</title>
+    <link rel="stylesheet" href="../css/perference.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Select your preferred news source:</h2>
+        <form id="preferencesForm">
+            <label for="preferences">Choose a news category:</label>
+            <select id="preferences">
+                <option value="business">Business</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="general">General</option>
+                <option value="health">Health</option>
+                <option value="science">Science</option>
+                <option value="sports">Sports</option>
+                <option value="technology">Technology</option>
+            </select>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        
+        <div id="newsContainer"></div>
+    </div>
+
+<script>
+
+document.getElementById('preferencesForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var selectedPreference = document.getElementById('preferences').value;
+
+            var apiUrls = {
+                "business": "https://saurav.tech/NewsAPI/top-headlines/category/business/us.json",
+                "entertainment": "https://saurav.tech/NewsAPI/top-headlines/category/entertainment/in.json",
+                "general": "https://saurav.tech/NewsAPI/top-headlines/category/general/us.json",
+                "health": "https://saurav.tech/NewsAPI/top-headlines/category/health/us.json",
+                "science": "https://saurav.tech/NewsAPI/top-headlines/category/science/us.json",
+                "sports": "https://saurav.tech/NewsAPI/top-headlines/category/sports/us.json",
+                "technology": "https://saurav.tech/NewsAPI/top-headlines/category/technology/us.json"
+            };
+
+            if (selectedPreference) {
+                fetch(apiUrls[selectedPreference])
+                    .then(response => response.json())
+                    .then(data => {
+                        displayNews(data.articles);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            } else {
+                console.log("No preference selected.");
+            }
+        });
+
+        function displayNews(articles) {
+            var newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = '';
+
+            articles.forEach(article => {
+                var articleElement = document.createElement('div');
+                articleElement.innerHTML = `
+                    <h3>${article.title}</h3>
+                    <p>${article.description}</p>
+                    <a href="${article.url}" target="_blank">Read more</a>
+                `;
+                newsContainer.appendChild(articleElement);
+            });
+        }
+</script>
+</body>
+
+</html>

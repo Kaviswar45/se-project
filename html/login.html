@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <div class="container">
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <!-- Use onsubmit event to call the login function -->
+            <button type="submit">Login</button>
+        </form>
+        <a href="register.html">Register Here</a>
+    </div>
+
+    <script>
+        // Add event listener to call login() function when the form is submitted
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+            await login(); // Call the login function
+        });
+
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const requestData = {
+                username: username,
+                password: password
+            };
+
+            try {
+                const response = await fetch("http://localhost:3000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    // Store the username in local storage
+                    localStorage.setItem('username', responseData.user.username);
+                    
+                    // Check the responseNumber
+                    if (responseData.responseNumber === 1) {
+                        // Redirect to index.html
+                        window.location.href = "/Users/kaviswarr/Desktop/news aggregation software/html/home/index.html";
+                    } else if (responseData.responseNumber === 2) {
+                        // Redirect to profile.html
+                        window.location.href = "profile.html";
+                    } else {
+                        // Handle other cases
+                        console.error("Unknown responseNumber:", responseData.responseNumber);
+                    }
+                } else {
+                    throw new Error("Invalid username or password");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Invalid username or password");
+            }
+        }
+    </script>
+</body>
+</html>
