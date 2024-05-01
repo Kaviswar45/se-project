@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Cards</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black;
+        }
+        
+        .card {
+            background-color: black;
+            color: #1de9b6;
+        }
+        
+        .card-title,
+        .card-text {
+            color: white;
+        }
+        
+        .card:hover .card-title,
+        .card:hover .card-text {
+            color: #1de9b6;
+        }
+        
+        .btn {
+            color: #1de9b6 !important;
+        }
+        
+        .btn:hover {
+            color: white !important;
+        }
+        
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+        
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover {
+            color: #1de9b6 !important;
+        }
+.green{
+  color: #1de9b6;
+}
+
+.btns {
+  background-color: #1de9b6;
+  color: black;
+  border: 1px solid #1de9b6; /* Keep the button shape border */
+  padding: 10px 20px; /* Adjust padding to make the button slightly bigger */
+  border-radius: 20px; /* Make the button pill-shaped */
+}
+
+.btns:hover {
+  color: white; /* Change text color to white on hover */
+}
+
+
+    </style>
+</head>
+<body>
+
+<section class="smart-scroll">
+  <div class="container-fluid">
+      <nav class="navbar navbar-expand-md navbar-dark">
+          <a class="navbar-brand heading-black" href="./home/index.html">
+              NEWStide
+          </a>
+          <div class="col-2">
+              <img src="./home/Image (1).png" alt="logo" style="max-width: 50px;">
+          </div>
+          <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse"
+                  data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                  aria-label="Toggle navigation">
+              <span data-feather="grid"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link page-scroll" href="./profile_edit.html">Profile</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link page-scroll" href="./savedpages.html">Saved page</a>
+                </li>
+                
+                  
+                  <li class="nav-item">
+                      <a class="nav-link page-scroll" href="#" onclick="logout()">Logout</a>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+  </div>
+</section>
+<br><br><br>
+
+<div class="container">
+  <form id="preferencesForm" class="mt-4 text-center">
+    <div class="form-group">
+        <label for="preferences" class="green">Choose a news category:</label>
+        <select id="preferences" class="form-control">
+            <option value="" disabled selected>Choose a category</option>
+            <option value="business">Business</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="general">General</option>
+            <option value="health">Health</option>
+            <option value="science">Science</option>
+            <option value="sports">Sports</option>
+            <option value="technology">Technology</option>
+        </select>
+    </div>
+    <button type="button"  class="btns" onclick="news()"> Submit</button>
+</form>
+ <br><br>
+  <!-- First Card -->
+
+  <div class="view">
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-4">
+                          <img src="https://wtop.com/wp-content/uploads/2022/04/Capitol_Evacuation_53865-scaled.jpg" class="card-img" alt="Article Image">
+                      </div>
+                      <div class="col-md-8">
+                          <h5 class="card-title">Russia-Ukraine War Live News: Mariupol, Putin and the Latest Updates - The New York Times</h5>
+                          <p class="card-text">
+                              <strong>Author:</strong> Anton Troianovski, Victoria Kim, Cora Engelbrecht<br>
+                              Russias biggest military loss so far in the Ukraine war is also becoming something of a liability for the Kremlins propaganda machine.After Russias flagship in the Black Sea, the Moskva, sank last we… [+8507 chars]2022-04-21T12:05:07Z<br>
+                              <!-- Add content here -->
+                          </p>
+                          <div class="d-flex align-items-center">
+                              <button class="btn btn-outline-warning bookmark-btn">
+                                  <i class="fas fa-star"></i> Bookmark
+                              </button>
+                              <a href="https://www.nytimes.com/live/2022/04/21/world/ukraine-russia-war-news" class="btn btn-primary ml-2">Read more</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Second Card -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-4">
+                          <img src="https://wtop.com/wp-content/uploads/2022/04/Capitol_Evacuation_53865-scaled.jpg" class="card-img" alt="Article Image">
+                      </div>
+                      <div class="col-md-8">
+                          <h5 class="card-title">Russia-Ukraine War Live News: Mariupol, Putin and the Latest Updates - The New York Times</h5>
+                          <p class="card-text">
+                              <strong>Author:</strong> Anton Troianovski, Victoria Kim, Cora Engelbrecht<br>
+                              Russias biggest military loss so far in the Ukraine war is also becoming something of a liability for the Kremlins propaganda machine.After Russias flagship in the Black Sea, the Moskva, sank last we… [+8507 chars]2022-04-21T12:05:07Z<br>
+                              <!-- Add content here -->
+                          </p>
+                          <div class="d-flex align-items-center">
+                              <button class="btn btn-outline-warning bookmark-btn">
+                                  <i class="fas fa-star"></i> Bookmark
+                              </button>
+                              <a href="https://www.nytimes.com/live/2022/04/21/world/ukraine-russia-war-news" class="btn btn-primary ml-2">Read more</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+<script>
+  // Function to check if the user is logged in
+  function user() {
+      const username = localStorage.getItem('username');
+      if (!username) {
+          window.location.href = "../login.html";
+      }
+      console.log("username found")
+      checkuser(username)
+  }
+
+  // Function to check the user against the server
+  async function checkuser(username) {
+      try {
+          const response = await fetch("http://localhost:3000/api/checkuser", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ username: username })
+          });
+
+          if (response.ok) {
+              const result = await response.json();
+              if (result.exists) {
+                  console.log("User exists", result.userProfile);
+                  name = result.userProfile.full_name
+                  console.log(name)
+              } else {
+               
+                  // Redirect to the login page
+                  window.location.href = "../login.html";
+              }
+          } else {
+              throw new Error("Failed to check user");
+          }
+      } catch (error) {
+          console.error(error);
+      }
+  }
+
+  // Execute functions when the window loads
+  window.onload = function() {
+      user(); // Check if the user is logged in
+   
+  };
+
+
+
+
+  function news() {
+        const selectedCategory = document.getElementById('preferences').value;
+        console.log("Selected category:", selectedCategory);
+    }
+
+
+
+
+
+
+  function logout(){
+      localStorage.removeItem('username');
+      window.location.href="../login.html"
+  }
+</script>
+
+
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

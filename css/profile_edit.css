@@ -1,17 +1,18 @@
+/* CSS for better design */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #1de9b6;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
 .container {
     width: 500px;
-    height: 320px;
+    height: 460px;
     padding: 20px;
     background-color:black;
     color:#1de9b6 ;
@@ -19,16 +20,32 @@ body {
     box-shadow: 0 2px 5px white;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+h1 {
+    color: #1de9b6;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
 }
 
 label {
+    display: block;
     margin-bottom: 5px;
+    color: #1de9b6;
+    font-weight: bold;
 }
 
-input {
+input,textarea {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #1de9b6;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+input ,textarea{
     padding: 7px;
     margin-bottom: 10px;
 }
@@ -43,13 +60,5 @@ button {
 }
 
 button:hover {
-    background-color: #00bfa5;
-}
-
-a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    color: #1de9b6;
-    margin-top: 10px;
+    background-color: #1de9b6;
 }

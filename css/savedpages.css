@@ -1,0 +1,55 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 1000px;
+    height: 500px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    width: 1000px;
+    height: 350px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.card .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card .card-text {
+    font-size: 0.9rem;
+}
+
+.card .btn {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.bookmarked {
+    color: orange; /* Change color if bookmarked */
+}

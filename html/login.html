@@ -8,14 +8,19 @@
 </head>
 <body>
     <div class="container">
+        <h1><center>Login</center></h1>
+
         <form id="loginForm">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
+            <br
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <br>
             <!-- Use onsubmit event to call the login function -->
             <button type="submit">Login</button>
         </form>
+        <br>
         <a href="register.html">Register Here</a>
     </div>
 
@@ -52,7 +57,7 @@
                     // Check the responseNumber
                     if (responseData.responseNumber === 1) {
                         // Redirect to index.html
-                        window.location.href = "/Users/kaviswarr/Desktop/news aggregation software/html/home/index.html";
+                        window.location.href = "./home/index.html";
                     } else if (responseData.responseNumber === 2) {
                         // Redirect to profile.html
                         window.location.href = "profile.html";

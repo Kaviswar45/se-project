@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile</title>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="../css/profile_edit.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1><center>Profile</center></h1>
+    <div class="profile-container">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" class="form-control"readonly >
+        </div>
+        <div class="form-group">
+            <label for="birth_date">Birth Date:</label>
+            <input type="date" id="birth_date" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="bio">Bio:</label>
+            <textarea id="bio" class="form-control" readonly></textarea>
+        </div>
+        <div class="button-container">
+            <button id="editButton" type="button" class="btn btn-primary" onclick="handleEdit()">Edit</button>
+        </div>
+    </div>
+</div>
+
+<script> 
+function handleEdit() {
+    var editButton = document.getElementById('editButton');
+    var buttonContainer = document.querySelector('.button-container');
+    var fields = document.querySelectorAll('.form-control');
+    
+    if (editButton.innerText === 'Edit') {
+        editButton.innerText = 'Save';
+        
+        fields.forEach(function(field) {
+            if (field.id !== 'username') {
+                field.removeAttribute('readonly');
+            }
+        });
+
+        var cancelButton = document.createElement('button');
+        cancelButton.innerText = 'Cancel';
+        cancelButton.className = 'btn btn-secondary ml-2';
+        cancelButton.addEventListener('click', function() {
+            editButton.innerText = 'Edit';
+            fields.forEach(function(field) {
+                field.setAttribute('readonly', true);
+            });
+            buttonContainer.removeChild(cancelButton);
+        });
+        buttonContainer.appendChild(cancelButton);
+    } else {
+        editProfile();
+    }
+}
+
+    
+async function editProfile() {
+    // Retrieve values from input fields
+    var username = document.getElementById('username').value;
+    var fullName = document.getElementById('full_name').value;
+    var birthDate = document.getElementById('birth_date').value;
+    var bio = document.getElementById('bio').value;
+
+    // Construct object with updated profile data
+    var updatedProfile = {
+        username: username,
+        full_name: fullName,
+        birth_date: birthDate,
+        bio: bio
+    };
+
+    try {
+        // Make a POST request to the editprofile API
+        const response = await fetch("http://localhost:3000/api/updateprofile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedProfile)
+        });
+
+        // Check if the response is successful
+        if (response.ok) {
+            console.log("Profile updated successfully");
+            alert("profile updated succesfully")
+            window.location.href = "./home/index.html";
+            // You can display a message to the user or perform any other action here
+        } else {
+            console.error("Failed to update profile:", response.status);
+        }
+    } catch (error) {
+        console.error("Error updating profile:", error);
+    }
+}
+
+    function createProfile() {
+      // Create profile logic here
+    }
+    
+    // Define a function named user to retrieve username from local storage and set it as a global variable
+    function user() {
+        // Retrieve username from local storage
+        const username = localStorage.getItem('username');
+        // If username is not found, redirect to login page
+        if (!username) {
+            window.location.href = "../login.html";
+        }
+        // Set username as a global variable
+        window.username = username;
+        viewProfile(username) 
+    }
+    
+    async function viewProfile(username) {
+        try {
+            // Make a POST request to the viewprofile API
+            const response = await fetch("http://localhost:3000/api/viewprofile", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username: username })
+            });
+    
+            // Check if the response is successful
+            if (response.ok) {
+                const userProfile = await response.json();
+                console.log("User profile:", userProfile);
+                // Set values in the HTML form
+                document.getElementById('username').value = userProfile.username;
+                document.getElementById('full_name').value = userProfile.full_name;
+                // Date formatting if needed
+                const birthDate = new Date(userProfile.birth_date);
+                document.getElementById('birth_date').valueAsDate = birthDate;
+                document.getElementById('bio').value = userProfile.bio;
+            } else {
+                console.error("Failed to fetch user profile:", response.status);
+            }
+        } catch (error) {
+            console.error("Error fetching user profile:", error);
+        }
+    }
+    
+    // Call the user function when the window is loaded
+    window.onload = user;
+    
+    // Log the username to console (optional)
+    console.log(window.username);
+    
+    </script>
+    
+</body>
+</html>

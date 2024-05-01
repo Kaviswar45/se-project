@@ -139,6 +139,46 @@ app.post('/api/checkuser', async (req, res) => {
 });
 
 
+//route view profile
+app.post('/api/viewprofile', async (req, res) => {
+    const { username } = req.body;
+
+    try {
+        // Insert new user profile into the user_profile table
+        const newUserProfile = await pool.query(
+            'SELECT * FROM user_profile WHERE username = $1',
+            [username]
+        );
+
+        res.status(201).json(newUserProfile.rows[0]); // Send back the newly created user profile
+    } catch (error) {
+        console.error('Error creating user profile:', error);
+        res.status(500).json({ error: 'Failed to create user profile' });
+    }
+});
+
+
+
+//route update profile
+app.post('/api/updateprofile', async (req, res) => {
+    const { username, full_name, birth_date, bio } = req.body;
+
+    try {
+        // Update the user profile in the user_profile table
+        const updatedProfile = await pool.query(
+            'UPDATE user_profile SET full_name = $1, birth_date = $2, bio = $3 WHERE username = $4 RETURNING *',
+            [full_name, birth_date, bio, username]
+        );
+
+        res.status(200).json(updatedProfile.rows[0]); // Send back the updated user profile
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        res.status(500).json({ error: 'Failed to update user profile' });
+    }
+});
+
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
