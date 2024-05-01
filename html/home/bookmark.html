@@ -103,6 +103,7 @@
 </section>
 
 
+
 <script>
     // Function to check if the user is logged in
 
@@ -228,40 +229,43 @@
 
 
     async function viewBookmark(username, category, newsData) {
-        try {
-            const response = await fetch('http://localhost:3000/api/viewbookmark', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, category })
-            });
+    try {
+        const response = await fetch('http://localhost:3000/api/viewbookmark', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, category })
+        });
 
-            if (response.ok) {
-                const bookmarkData = await response.json();
-                console.log('view Bookmark data:', bookmarkData);
+        if (response.ok) {
+            const bookmarkData = await response.json();
+            console.log('view Bookmark data:', bookmarkData);
 
-                // Check if bookmarkData exists and has bookmarks
-                if (bookmarkData && bookmarkData.bookmarks) {
-                    bookmarkData.bookmarks.forEach(bookmark => {
-                        // Find matching URLs in the news data and print them
-                        const matchingArticles = newsData.articles.filter(article => article.url === bookmark.url);
-                        if (matchingArticles.length > 0) {
-                            console.log('Matching articles for bookmark:', matchingArticles);
-                            // Create cards for matching articles
-                            createCards(matchingArticles, category);
-                        }
-                    });
-                }
-            } else {
-                const errorMessage = await response.text();
-                console.error('Error:', errorMessage);
+            // Clear existing card data
+            const containers = document.querySelector('.containers');
+            containers.innerHTML = '';
+
+            // Check if bookmarkData exists and has bookmarks
+            if (bookmarkData && bookmarkData.length > 0) {
+                bookmarkData.forEach(bookmark => {
+                    // Find matching URL in the news data
+                    const matchingArticle = newsData.articles.find(article => article.url === bookmark.url);
+                    if (matchingArticle) {
+                        console.log('Matching article for bookmark:', matchingArticle);
+                        // Create card for matching article
+                        createCards({ articles: [matchingArticle] }, category);
+                    }
+                });
             }
-        } catch (error) {
-            console.error('Error:', error.message);
+        } else {
+            const errorMessage = await response.text();
+            console.error('Error:', errorMessage);
         }
+    } catch (error) {
+        console.error('Error:', error.message);
     }
-
+}
 
 
 

@@ -178,6 +178,61 @@ app.post('/api/updateprofile', async (req, res) => {
 });
 
 
+app.post('/api/bookmark', async (req, res) => {
+    const { username, category, url } = req.body;
+
+    try {
+        // Check if the bookmark already exists
+        const existingBookmark = await pool.query('SELECT * FROM bookmark WHERE username = $1 AND category = $2 AND url = $3', [username, category, url]);
+
+        if (existingBookmark.rows.length > 0) {
+            // If bookmark already exists, delete the existing bookmark
+            await pool.query('DELETE FROM bookmark WHERE username = $1 AND category = $2 AND url = $3', [username, category, url]);
+
+            // Return success response
+            return res.status(201).json({ message: 'Existing bookmark deleted' });
+        } else {
+            // Insert the new bookmark into the database
+            await pool.query('INSERT INTO bookmark (username, category, url) VALUES ($1, $2, $3)', [username, category, url]);
+
+            // Return success response
+            return res.status(200).json({ message: 'New bookmark added successfully' });
+        }
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error('Error adding/updating bookmark:', error);
+        return res.status(500).json({ error: 'Failed to add/update bookmark' });
+    }
+});
+
+
+
+app.post('/api/viewbookmark', async (req, res) => {
+    const { username, category } = req.body;
+
+    try {
+        // Query the bookmark table to retrieve data based on username and category
+        const bookmarkData = await pool.query('SELECT * FROM bookmark WHERE username = $1 AND category = $2', [username, category]);
+
+        // Check if any bookmark data is found
+        if (bookmarkData.rows.length > 0) {
+            // If data found, return it in the response
+            return res.status(200).json(bookmarkData.rows);
+        } else {
+            // If no data found, return a message indicating it
+            return res.status(404).json({ message: 'No bookmarks found for the provided username and category' });
+        }
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error('Error fetching bookmark data:', error);
+        return res.status(500).json({ error: 'Failed to fetch bookmark data' });
+    }
+});
+
+
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
