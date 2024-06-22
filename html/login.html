@@ -13,13 +13,17 @@
         <form id="loginForm">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
-            <br
+            <br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <br>
             <!-- Use onsubmit event to call the login function -->
             <button type="submit">Login</button>
         </form>
+        <!-- Add "forgot password" link -->
+        <br>
+        <!-- Update the href attribute to direct to forgetpass.html -->
+        <a href="./forgetpass.html" id="forgotPassword">Forgot Password?</a>
         <br>
         <a href="register.html">Register Here</a>
     </div>
@@ -30,6 +34,9 @@
             event.preventDefault(); // Prevent default form submission
             await login(); // Call the login function
         });
+
+        // No need to add event listener for the "forgot password" link since it directly navigates to forgetpass.html
+        // Removed the event listener
 
         async function login() {
             const username = document.getElementById("username").value;

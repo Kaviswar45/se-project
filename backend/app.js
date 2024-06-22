@@ -2,7 +2,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
-const cors=require('cors')
+const cors=require('cors');
+const bcrypt = require('bcrypt');
+
 
 const app = express();
 const PORT = 3000;
@@ -229,6 +231,68 @@ app.post('/api/viewbookmark', async (req, res) => {
     }
 });
 
+
+
+// API endpoint for forget password functionality
+app.post('/api/forget', (req, res) => {
+    const { username, email } = req.body;
+    
+    // Check if the provided username and email match any records in the users table
+    const user = users.find(u => u.username === username && u.email === email);
+    
+    if (user) {
+        // If a matching user is found, redirect to changepassword.html
+        res.redirect('./changepassword.html');
+    } else {
+        // If no matching user is found, return an error response
+        res.status(404).json({ error: 'User not found' });
+    }
+});
+
+
+// API endpoint for changing password
+app.post('/api/changepassword', (req, res) => {
+    const { username, password } = req.body;
+
+    // Find the user in the users array
+    const userIndex = users.findIndex(user => user.username === username);
+
+    if (userIndex !== -1) {
+        // Update the user's password
+        users[userIndex].password = password;
+        res.status(200).json({ message: 'Password updated successfully' });
+    } else {
+        // If user not found, return an error response
+        res.status(404).json({ error: 'User not found' });
+    }
+});
+
+// API endpoint for user registration
+app.post('/api/registeruser', async (req, res) => {
+    const { gmail, password } = req.body;
+  
+    try {
+      // Hash the password using bcrypt
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Insert user details into the database
+      const queryText = 'INSERT INTO dummy (gmail, password) VALUES ($1, $2)';
+      const queryValues = [gmail, hashedPassword];
+  
+      await pool.query(queryText, queryValues, (err, result) => {
+        if (err) {
+          console.error('Error registering user: ' + err);
+          res.status(500).json({ error: 'Error registering user' });
+        } else {
+          console.log('User registered successfully');
+          res.status(200).json({ message: 'User registered successfully' });
+        }
+      });
+    } catch (error) {
+      console.error('Error hashing password: ' + error);
+      res.status(500).json({ error: 'Error hashing password' });
+    }
+  });
 
 
 

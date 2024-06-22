@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="Image (1).png" sizes="32x32" type="image/png">
     <title>NEWSTIDE</title>
-    <meta name="description"
-          content="Knight is a beautiful Bootstrap 4 template for product landing pages."/> 
+    <meta name="description" content="Knight is a beautiful Bootstrap 4 template for product landing pages."/> 
     
     <!--Inter UI font-->
     <link href="https://rsms.me/inter/inter-ui.css" rel="stylesheet">
@@ -43,18 +42,15 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#profile">Profile</a>
+                        <a class="nav-link page-scroll" href="../profile_edit.html">Profile</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#bookamrk">Saved Pages</a>
+                        <a class="nav-link page-scroll" href="./bookmark.html">Saved Pages</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link page-scroll" href="#" onclick="logout()">Logout</a>
                     </li>
-                    
-                    
-                    
                 </ul>
             </div>
         </nav>
@@ -69,7 +65,7 @@
         <div class="row vh-md-100">
             <div class="col-md-8 col-sm-10 col-12 mx-auto my-auto text-center">
                 <h2 class="heading-black text-capitalize" id="user"> hi </h2>
-                <h4>choose your news feed</h4>
+                <h4>Welcome to Bookmarked Page</h4>
                 <form id="preferencesForm" class="mt-4">
                     <div class="form-group">
                         <label for="preferences">Choose a news category:</label>
@@ -106,7 +102,6 @@
 
 <script>
     // Function to check if the user is logged in
-
     let username;
 
     function user() {
@@ -150,7 +145,7 @@
     }
 
     // Execute functions when the window loads
-    window.onload = function() {
+    window.onload = function () {
         user(); // Check if the user is logged in
     };
 
@@ -198,8 +193,6 @@
 
     // Function to fetch data from the API and create cards
     function fetchDataAndCreateCards(selectedCategory) {
-
-        console.log("category:", selectedCategory)
         const apiUrl = {
             "business": "https://saurav.tech/NewsAPI/top-headlines/category/business/us.json",
             "entertainment": "https://saurav.tech/NewsAPI/top-headlines/category/entertainment/in.json",
@@ -218,56 +211,53 @@
             .then(response => response.json())
             .then(data => {
                 console.log("News Data:", data);
-                createCards(data, selectedCategory); // Pass selected category to createCards function
                 viewBookmark(username, selectedCategory, data); // Pass news data to viewBookmark function
             })
             .catch(error => console.error("Error fetching news:", error));
 
     }
 
-
-
-
     async function viewBookmark(username, category, newsData) {
-    try {
-        const response = await fetch('http://localhost:3000/api/viewbookmark', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, category })
-        });
+        try {
+            const response = await fetch('http://localhost:3000/api/viewbookmark', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, category })
+            });
 
-        if (response.ok) {
-            const bookmarkData = await response.json();
-            console.log('view Bookmark data:', bookmarkData);
+            if (response.ok) {
+                const bookmarkData = await response.json();
+                console.log('view Bookmark data:', bookmarkData);
 
-            // Clear existing card data
-            const containers = document.querySelector('.containers');
-            containers.innerHTML = '';
+                // Clear existing card data
+                const containers = document.querySelector('.containers');
+                containers.innerHTML = '';
 
-            // Check if bookmarkData exists and has bookmarks
-            if (bookmarkData && bookmarkData.length > 0) {
-                bookmarkData.forEach(bookmark => {
-                    // Find matching URL in the news data
-                    const matchingArticle = newsData.articles.find(article => article.url === bookmark.url);
-                    if (matchingArticle) {
-                        console.log('Matching article for bookmark:', matchingArticle);
-                        // Create card for matching article
-                        createCards({ articles: [matchingArticle] }, category);
+                // Check if bookmarkData exists and has bookmarks
+                if (bookmarkData && bookmarkData.length > 0) {
+                    const matchingArticles = newsData.articles.filter(article => bookmarkData.some(bookmark => bookmark.url === article.url));
+                    if (matchingArticles.length > 0) {
+                        createCards({ articles: matchingArticles }, category); // Create cards for matching articles
+                    } else {
+                        const noBookmarkMessage = document.createElement('p');
+                        noBookmarkMessage.textContent = 'No bookmarks';
+                        containers.appendChild(noBookmarkMessage);
                     }
-                });
+                } else {
+                    const noBookmarkMessage = document.createElement('p');
+                    noBookmarkMessage.textContent = 'No bookmarks';
+                    containers.appendChild(noBookmarkMessage);
+                }
+            } else {
+                const errorMessage = await response.text();
+                console.error('Error:', errorMessage);
             }
-        } else {
-            const errorMessage = await response.text();
-            console.error('Error:', errorMessage);
+        } catch (error) {
+            console.error('Error:', error.message);
         }
-    } catch (error) {
-        console.error('Error:', error.message);
     }
-}
-
-
 
     // Function to handle bookmarking an article
     function bookmarkArticle(category, url) {
@@ -280,7 +270,7 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: username, // Replace 'your_username_here' with the actual username
+                username: username,
                 category: category,
                 url: url
             })
@@ -306,9 +296,6 @@
             });
     }
 
-
-
-
     // Add event listener to the form submission
     document.getElementById('preferencesForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent form submission
@@ -318,6 +305,7 @@
 
     });
 </script>
+
 
 
 

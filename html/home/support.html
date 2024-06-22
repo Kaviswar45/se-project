@@ -3,137 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Support1</title>
     <link rel="stylesheet" href="support.css">
 </head>
 <body>
-    <h1>SUPPORT</p>
 
-<section class="main">
+    <section class="cards-wrapper">
+        <div class="card-grid-space">
+            <a class="card" href="accounthelp.html" style="--bg-img: url(https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/html-syntax/cover.jpg)">
+                <div>
+                    <h1>Account Help</h1>
+                    <p>Instructions for signing in and managing account</p>
+                </div>
+            </a>
+        </div>
 
-  <div class="wrap wrap--1">
-    <div class="container container--1">
-        <div>
-            <h2><span>Account Help</span></h2>
-            <p>Instructions for signing in and logging in and managing account</p>
-          </div>
-    </div>
-  </div>
+        <div class="card-grid-space">
+            <a class="card" href="#" style="--bg-img: url('https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/basic-types-of-html-tags/cover.jpg')">
+                <div>
+                    <h1>Technical Support</h1>
+                    <p>Troubleshooting guide for common technical issues</p>
+                </div>
+            </a>
+        </div>
 
-  <div class="wrap wrap--2">
-    <div class="container container--2">
-      <div>
-        <h2>Technical Support</h2>
-        <p>Troubleshooting guide for common techincal issues</p>
-      </div>
-    </div>
-  </div>
+        <div class="card-grid-space">
+            <a class="card" href="FAQ.html" style="--bg-img: url('https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/links-images-about-file-paths/cover.jpg')">
+                <div>
+                    <h1>FAQ</h1>
+                    <p>Frequently asked questions about this website</p>
+                </div>
+            </a>
+        </div>
+    </section>
 
-  <div class="wrap wrap--3">
-    <div class="container container--3">
-      <div>
-        <h2><span>FAQ</span></h2>
-        <p>Frequently asked questions about this website</p>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<a href="https://abubakersaeed.netlify.app/designs/d10-parallax-tilt-effect-cards" class="abs-site-link" rel="nofollow noreferrer" target="_blank"></a>
 </body>
-<script>
-    class parallaxTiltEffect {
-
-constructor({element, tiltEffect}) {
-
-  this.element = element;
-  this.container = this.element.querySelector(".container");
-  this.size = [300, 360];
-  [this.w, this.h] = this.size;
-
-  this.tiltEffect = tiltEffect;
-
-  this.mouseOnComponent = false;
-
-  this.handleMouseMove = this.handleMouseMove.bind(this);
-  this.handleMouseEnter = this.handleMouseEnter.bind(this);
-  this.handleMouseLeave = this.handleMouseLeave.bind(this);
-  this.defaultStates = this.defaultStates.bind(this);
-  this.setProperty = this.setProperty.bind(this);
-  this.init = this.init.bind(this);
-
-  this.init();
-}
-
-handleMouseMove(event) {
-  const {offsetX, offsetY} = event;
-
-  let X;
-  let Y;
-
-  if (this.tiltEffect === "reverse") {
-    X = ((offsetX - (this.w/2)) / 3) / 3;
-    Y = (-(offsetY - (this.h/2)) / 3) / 3;
-  }
-
-  else if (this.tiltEffect === "normal") {
-    X = (-(offsetX - (this.w/2)) / 3) / 3;
-    Y = ((offsetY - (this.h/2)) / 3) / 3;
-  }
-
-  this.setProperty('--rY', X.toFixed(2));
-  this.setProperty('--rX', Y.toFixed(2));
-
-  this.setProperty('--bY', (80 - (X/4).toFixed(2)) + '%');
-  this.setProperty('--bX', (50 - (Y/4).toFixed(2)) + '%');
-}
-
-handleMouseEnter() {
-  this.mouseOnComponent = true;
-  this.container.classList.add("container--active");
-}
-
-handleMouseLeave() {
-  this.mouseOnComponent = false;
-  this.defaultStates();
-}
-
-defaultStates() {
-  this.container.classList.remove("container--active");
-  this.setProperty('--rY', 0);
-  this.setProperty('--rX', 0);
-  this.setProperty('--bY', '80%');
-  this.setProperty('--bX', '50%');
-}
-
-setProperty(p, v) {
-  return this.container.style.setProperty(p, v);
-}
-
-init() {
-  this.element.addEventListener('mousemove', this.handleMouseMove);
-  this.element.addEventListener('mouseenter', this.handleMouseEnter);
-  this.element.addEventListener('mouseleave', this.handleMouseLeave);
-}
-
-}
-
-const $ = e => document.querySelector(e);
-
-const wrap1 = new parallaxTiltEffect({
-element: $('.wrap--1'),
-tiltEffect: 'reverse'
-});
-
-const wrap2 = new parallaxTiltEffect({
-element: $('.wrap--2'),
-tiltEffect: 'normal'
-});
-
-const wrap3 = new parallaxTiltEffect({
-element: $('.wrap--3'),
-tiltEffect: 'reverse'
-});
-</script>
 </html>
